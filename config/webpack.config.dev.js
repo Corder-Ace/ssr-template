@@ -5,9 +5,11 @@ const path = require('path');
 module.exports = {
     mode: 'development',
     devtool: 'eval-source-map',
-    entry: path.join(__dirname, '../client/index.js'),
+    entry: {
+        app: [path.join(__dirname, '../client/index.js'), 'react-hot-loader/patch', 'webpack/hot/dev-server']
+    },
     output: {
-        filename: "[name].[hash:8].js",
+        filename: "static/[name].[hash:8].js",
         chunkFilename: 'static/js/[name].chunk.js',
         path: path.join(__dirname, '../dist'),
         publicPath: "/"
@@ -23,16 +25,16 @@ module.exports = {
             //     loader: 'eslint-loader',
             // },
             {
+                test: /\.(js|jsx)/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                options:{
+                    cacheDirectory: true, // 缓存目录 babel-loader特性
+                    cacheCompression: false // 不缓存gzip
+                }
+            },
+            {
                 oneOf: [
-                    {
-                        test: /\.(js|jsx)/,
-                        loader: 'babel-loader',
-                        exclude: /node_modules/,
-                        options:{
-                            cacheDirectory: true, // 缓存目录 babel-loader特性
-                            cacheCompression: false // 不缓存gzip
-                        }
-                    },
                     {
                         test: /\.css/,
                         use: ['style-loader', 'css-loader']

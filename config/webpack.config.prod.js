@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin= require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const firstPlugin = require('./test');
 
 module.exports = {
     mode: 'development',
@@ -38,7 +39,7 @@ module.exports = {
                         }
                     },
                     {
-                        test: /\.css%/,
+                        test: /\.css$/,
                         use: [
                             MiniCssExtractPlugin.loader,
                             {
@@ -113,6 +114,7 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: path.join(__dirname, '../public/favicon.ico'), to: path.join(__dirname, '../dist') },
         ]),
+        new firstPlugin()
         // new CleanWebpackPlugin(['dist'], {
         //     root: path.resolve(__dirname),
         //     exclude: ['dll'],
